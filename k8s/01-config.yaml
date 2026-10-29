@@ -9,7 +9,7 @@ stringData:
   POSTGRES_DB: blogdb
   POSTGRES_USER: bloguser
   POSTGRES_PASSWORD: blogpass
-  DATABASE_URL: postgresql://bloguser:blogpass@blog-db:5432/blogdb
+  DATABASE_URL: postgresql+psycopg2://bloguser:blogpass@blog-db:5432/blogdb
 ---
 apiVersion: v1
 kind: ConfigMap

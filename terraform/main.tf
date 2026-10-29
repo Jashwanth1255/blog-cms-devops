@@ -80,7 +80,7 @@ resource "docker_container" "api" {
   restart = "unless-stopped"
 
   env = [
-    "DATABASE_URL=postgresql://${var.db_user}:${var.db_password}@db:5432/${var.db_name}",
+    "DATABASE_URL=postgresql+psycopg2://${var.db_user}:${var.db_password}@db:5432/${var.db_name}",
     "APP_VERSION=${var.app_version}",
   ]
 
