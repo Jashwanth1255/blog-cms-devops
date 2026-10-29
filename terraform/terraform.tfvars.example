@@ -1,0 +1,4 @@
+# Copy to terraform.tfvars to override defaults
+project_name = "tf-blog"
+api_port     = 5001
+app_version  = "1.0.1"

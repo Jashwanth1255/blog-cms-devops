@@ -1,0 +1,20 @@
+# Database credentials (Secret) and non-secret settings (ConfigMap)
+apiVersion: v1
+kind: Secret
+metadata:
+  name: blog-db-secret
+  namespace: blog
+type: Opaque
+stringData:
+  POSTGRES_DB: blogdb
+  POSTGRES_USER: bloguser
+  POSTGRES_PASSWORD: blogpass
+  DATABASE_URL: postgresql://bloguser:blogpass@blog-db:5432/blogdb
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: blog-config
+  namespace: blog
+data:
+  APP_VERSION: "1.0.0"
