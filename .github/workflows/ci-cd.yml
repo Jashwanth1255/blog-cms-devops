@@ -95,7 +95,17 @@ jobs:
           kubectl apply -f k8s/00-namespace.yaml
           kubectl apply -f k8s/01-config.yaml -f k8s/02-postgres.yaml -f k8s/03-api.yaml
           kubectl -n blog rollout status deployment/blog-db --timeout=180s
-          kubectl -n blog rollout status deployment/blog-api --timeout=180s
+          if ! kubectl -n blog rollout status deployment/blog-api --timeout=180s; then
+            kubectl -n blog get pods -o wide
+            kubectl -n blog describe deployment blog-api
+            kubectl -n blog get events --sort-by=.lastTimestamp
+            for pod in $(kubectl -n blog get pods -l app=blog-api -o name); do
+              kubectl -n blog describe "$pod"
+              kubectl -n blog logs "$pod" -c api --tail=100 || true
+              kubectl -n blog logs "$pod" -c api --previous --tail=100 || true
+            done
+            exit 1
+          fi
 
       - name: Check the deployed API
         run: |
